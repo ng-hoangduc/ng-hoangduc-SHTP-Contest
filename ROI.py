@@ -19,7 +19,7 @@ def roi(img):
     """
     x = int(img.shape[1])
     y = int(img.shape[0])
-    shape = np.array([[int(1300), int(1250)], [int(1900), int(1250)], [int(1900), int(730)], [int(1300), int(730)]])
+    shape = np.array([[int(0), int(170)], [int(1600), int(170)], [int(1600), int(0)], [int(0), int(0)]])
 
     #define a numpy array with the dimensions of img, but comprised of zeros
     mask = np.zeros_like(img)
