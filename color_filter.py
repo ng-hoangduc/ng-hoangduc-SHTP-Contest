@@ -8,6 +8,10 @@ def color_filter(image):
     Chỉnh range của màu muốn lọc (lower, upper)
     ---> Vàng: lower(20,100 ,100), upper(40, 255, 255)
     ---> Xanh dương:lower(100, 150, 0), upper(140, 255, 255)
+
+    lower_white = np.array([0,0,0], dtype=np.uint8)
+    upper_white = np.array([0,0,255], dtype=np.uint8)
+    
     Phép and để trả về ảnh màu ban đầu (not HSV) - ko and sẽ trả về ảnh binary
     """
     rgb=cv2.cvtColor(image,cv2.COLOR_BGR2RGB)

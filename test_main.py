@@ -10,11 +10,20 @@ from resizeWithRatio import resize
 from putText import putText
 from drawLine import *
 from drawContours import drawContours
-#cv2.namedWindow('Image', cv2.WINDOW_NORMAL)
 
+#cap = cv2.VideoCapture("http://admin:SHTP_2020@192.168.1.100/cgi-bin/video.cgi?msubmenu=mjpg")
 cap = cv2.VideoCapture('1.avi')
 
 out = cv2.VideoWriter('result.avi',cv2.VideoWriter_fourcc('M','J','P','G'), 10, (1600, 900))
+
+count = 0
+states = "NG"
+t = ""
+time_capon = 0
+time_capoff = 0
+
+
+count_frame = 0
 
 while(True):
     # Capture frame-by-frame
@@ -29,22 +38,22 @@ while(True):
     # select roi
     frame_roi = roi(frame_filter)
     
-    # delay for low fps
-    key = cv2.waitKey(50)
-    
-    # draw contour from threshold image (frame_roi)
-    drawContours(frame_scale, frame_roi)
-    #img=cv2.imread('Image_117.jpg')
-    #rgb=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
-    #hsv=cv2.cvtColor(rgb,cv2.COLOR_RGB2HSV_FULL)
+    count_frame = count_frame + 1
 
-    #plt.imshow(hsv)
-    #plt.show()
+    if count_frame == 3:
+        # draw contour from threshold image (frame_roi)
+        count, states, t, time_capon, time_capoff = drawContours(frame_scale, frame_roi, count, states, t, time_capon, time_capoff)
+        count_frame = 0
+
+    putText(frame_scale, states, 1100, 650)
+    putText(frame_scale, "Time: "+t, 1100, 700)
+    putText(frame_scale, "Number of tests: " + str(count), 1100, 750)
+    putText(frame_scale, "Number of OK: " + str(time_capon), 1100, 800)
+    putText(frame_scale, "Number of NG: " + str(time_capoff), 1100, 850)
     out.write(frame_scale)
+    
+
     cv2.imshow("frame", frame_scale)
-    # press z to pause
-    if cv2.waitKey(1) & 0xFF == ord('z'):
-        time.sleep(15)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break

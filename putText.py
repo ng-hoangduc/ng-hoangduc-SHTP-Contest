@@ -7,11 +7,11 @@ from ROI import roi
 from getTime import getTime
 from resizeWithRatio import resize
 
-def putText(image, text):
+def putText(image, text, x, y):
     # font 
     font = cv2.FONT_HERSHEY_SIMPLEX 
     # org 
-    org = (1400, 800) 
+    org = (x, y) 
     # fontScale 
     fontScale = 1.5
     # Blue color in BGR 
